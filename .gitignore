@@ -1,7 +1,6 @@
 node_modules
-static
+dist
 npm-debug.log
-bundle.*
 portfolio-entry-template.html
 .env
 sendgrid.env

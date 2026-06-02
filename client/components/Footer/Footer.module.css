@@ -1,0 +1,11 @@
+.footer {
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border-dark);
+  padding: 24px 32px;
+  text-align: center;
+}
+
+.text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.3);
+}

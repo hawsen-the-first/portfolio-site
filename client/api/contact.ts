@@ -1,9 +1,15 @@
-import request from 'superagent'
-import { Submission } from '../../models/submission'
+import { strapiGet, strapiPost } from './strapi'
+import type { StrapiResponse, StrapiContact } from '../types/strapi'
 
-async function submitContactForm(submission: Submission): Promise<string> {
-  const response = await request.post('/api/v1/contact').send(submission)
-  return response.body.message
+export async function fetchContact() {
+  const { data } = await strapiGet<StrapiResponse<StrapiContact>>('/api/contact')
+  return data
 }
 
-export default { submitContactForm }
+export async function submitContactForm(form: {
+  email: string
+  mobile: string
+  message: string
+}) {
+  return strapiPost<{ message: string }>('/api/contact/submit', form)
+}
