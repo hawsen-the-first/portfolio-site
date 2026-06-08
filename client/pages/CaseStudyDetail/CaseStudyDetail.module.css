@@ -181,17 +181,108 @@
   border: none;
 }
 
-.gallery {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+.cta {
+  border-top: 1px solid var(--border-light);
+  margin-top: 64px;
+  padding-top: 64px;
+  padding-bottom: 32px;
+  text-align: center;
 }
 
-.galleryImg {
-  width: 100%;
+.ctaHeading {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  margin-bottom: 28px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ctaBtn {
+  display: inline-block;
+  padding: 13px 32px;
+  background: var(--color-green);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
   border-radius: var(--radius);
+  transition: background var(--ease);
+}
+
+.ctaBtn:hover {
+  background: var(--color-green-hover);
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  background: #1c1c1e;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.carouselTrack {
+  width: 100%;
+  height: 100%;
+}
+
+.carouselImg {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  aspect-ratio: 16 / 10;
+  display: block;
+}
+
+.carouselArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--ease);
+  z-index: 2;
+}
+
+.carouselArrow:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.carouselPrev { left: 20px; }
+.carouselNext { right: 20px; }
+
+.carouselDots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background var(--ease);
+}
+
+.dotActive {
+  background: #fff;
 }
 
 @media (max-width: 640px) {
@@ -199,7 +290,7 @@
     font-size: 28px;
   }
 
-  .gallery {
-    grid-template-columns: 1fr;
+  .ctaHeading {
+    font-size: 18px;
   }
 }

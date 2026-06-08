@@ -27,6 +27,7 @@ export interface StrapiProject {
   demoUrl?: string
   repoUrl?: string
   videoUrl?: string
+  ctaText?: string
   ProjectStatus?: 'In Progress' | 'Completed'
   coverImage?: StrapiMedia
   Images?: StrapiMedia[]

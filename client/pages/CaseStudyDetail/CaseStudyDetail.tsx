@@ -6,11 +6,11 @@ import type { StrapiProject } from '../../types/strapi'
 import { buildRichText } from '../../utils/richText'
 import styles from './CaseStudyDetail.module.css'
 
+const DEFAULT_CTA = "Working on something similar? Let's have a chat about your vision."
+
 function toEmbedUrl(url: string): string {
-  // YouTube: watch?v=ID or youtu.be/ID → embed/ID
   const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/)
   if (yt) return `https://www.youtube.com/embed/${yt[1]}`
-  // Vimeo: vimeo.com/ID → player.vimeo.com/video/ID
   const vm = url.match(/vimeo\.com\/(\d+)/)
   if (vm) return `https://player.vimeo.com/video/${vm[1]}`
   return url
@@ -21,6 +21,7 @@ export function CaseStudyDetail() {
   const navigate = useNavigate()
   const [project, setProject] = useState<StrapiProject | null>(null)
   const [loading, setLoading] = useState(true)
+  const [slide, setSlide] = useState(0)
 
   useEffect(() => {
     if (!slug) return
@@ -42,6 +43,9 @@ export function CaseStudyDetail() {
   }
 
   if (!project) return null
+
+  const images = project.Images ?? []
+  const hasImages = images.length > 0
 
   return (
     <article className={styles.page}>
@@ -92,22 +96,12 @@ export function CaseStudyDetail() {
             </span>
           )}
           {project.demoUrl && (
-            <a
-              href={project.demoUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.ctaLink}
-            >
+            <a href={project.demoUrl} target="_blank" rel="noreferrer" className={styles.ctaLink}>
               Live demo ›
             </a>
           )}
           {project.repoUrl && (
-            <a
-              href={project.repoUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.ctaLink}
-            >
+            <a href={project.repoUrl} target="_blank" rel="noreferrer" className={styles.ctaLink}>
               View repo ›
             </a>
           )}
@@ -132,19 +126,58 @@ export function CaseStudyDetail() {
           </div>
         )}
 
-        {project.Images && project.Images.length > 0 && (
-          <div className={styles.gallery}>
-            {project.Images.map((img) => (
-              <img
-                key={img.id}
-                src={strapiUrl(img.url)}
-                alt={img.alternativeText ?? ''}
-                className={styles.galleryImg}
-              />
-            ))}
-          </div>
-        )}
+        <div className={styles.cta}>
+          <p className={styles.ctaHeading}>
+            {project.ctaText ?? DEFAULT_CTA}
+          </p>
+          <a href="/#contact" className={styles.ctaBtn}>Get in touch</a>
+        </div>
       </div>
+
+      {hasImages && (
+        <div className={styles.carousel}>
+          <div className={styles.carouselTrack}>
+            <img
+              src={strapiUrl(images[slide].url)}
+              alt={images[slide].alternativeText ?? ''}
+              className={styles.carouselImg}
+            />
+          </div>
+
+          {images.length > 1 && (
+            <>
+              <button
+                className={`${styles.carouselArrow} ${styles.carouselPrev}`}
+                onClick={() => setSlide((s) => (s - 1 + images.length) % images.length)}
+                aria-label="Previous image"
+              >
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10 12L6 8l4-4" />
+                </svg>
+              </button>
+              <button
+                className={`${styles.carouselArrow} ${styles.carouselNext}`}
+                onClick={() => setSlide((s) => (s + 1) % images.length)}
+                aria-label="Next image"
+              >
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 4l4 4-4 4" />
+                </svg>
+              </button>
+              <div className={styles.carouselDots}>
+                {images.map((_, i) => (
+                  <button
+                    key={i}
+                    className={`${styles.dot} ${i === slide ? styles.dotActive : ''}`}
+                    onClick={() => setSlide(i)}
+                    aria-label={`Go to image ${i + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      )}
     </article>
   )
 }
