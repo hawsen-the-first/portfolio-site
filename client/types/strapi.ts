@@ -26,6 +26,7 @@ export interface StrapiProject {
   Description?: RichTextBlock[]
   demoUrl?: string
   repoUrl?: string
+  videoUrl?: string
   ProjectStatus?: 'In Progress' | 'Completed'
   coverImage?: StrapiMedia
   Images?: StrapiMedia[]

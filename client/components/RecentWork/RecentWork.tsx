@@ -67,10 +67,10 @@ export function RecentWork({ title, subtitle, projects }: Props) {
                     to={`/case-studies/${project.slug}`}
                     className={styles.cardLink}
                   >
-                    Know more ›
+                    Read more ›
                   </Link>
                 ) : (
-                  <span className={styles.cardLink}>Know more ›</span>
+                  <span className={styles.cardLink}>Read more ›</span>
                 )}
               </div>
             ))}
@@ -86,6 +86,38 @@ export function RecentWork({ title, subtitle, projects }: Props) {
               <path d="M6 4l4 4-4 4" />
             </svg>
           </button>
+        </div>
+
+        <div className={styles.mobileGrid}>
+          {items.map((project) => (
+            <div key={project.id} className={styles.card}>
+              <div className={styles.cardImage}>
+                {project.coverImage && (
+                  <img
+                    src={strapiUrl(project.coverImage.url)}
+                    alt={project.coverImage.alternativeText ?? project.Title}
+                  />
+                )}
+              </div>
+              <h3 className={styles.cardTitle}>{project.Title}</h3>
+              <p className={styles.cardDesc}>
+                {project.shortDescription ?? ''}
+              </p>
+              {project.slug ? (
+                <Link to={`/case-studies/${project.slug}`} className={styles.cardLink}>
+                  Read more ›
+                </Link>
+              ) : (
+                <span className={styles.cardLink}>Read more ›</span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className={styles.footer}>
+          <Link to="/case-studies" className={styles.viewAll}>
+            View all projects ›
+          </Link>
         </div>
       </div>
     </section>

@@ -41,26 +41,6 @@
   margin-bottom: 0;
 }
 
-.footer {
-  margin-top: 64px;
-  text-align: center;
-}
-
-.viewAll {
-  display: inline-block;
-  padding: 12px 28px;
-  border-radius: var(--radius);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-dark);
-  border: 1.5px solid var(--border-light);
-  transition: border-color var(--ease), color var(--ease);
-}
-
-.viewAll:hover {
-  border-color: var(--text-dark);
-  color: var(--text-dark);
-}
 
 .imageFirst .studyText {
   order: 2;

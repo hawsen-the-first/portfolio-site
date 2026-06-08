@@ -97,11 +97,6 @@ export function CaseStudies({ title, subtitle, projects }: Props) {
           </div>
         ))}
 
-        <div className={styles.footer}>
-          <Link to="/case-studies" className={styles.viewAll}>
-            View all projects ›
-          </Link>
-        </div>
       </div>
     </section>
   )

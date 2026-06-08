@@ -164,6 +164,23 @@
   border-radius: 4px;
 }
 
+.videoWrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #1c1c1e;
+  margin-bottom: 48px;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 .gallery {
   display: grid;
   grid-template-columns: 1fr 1fr;

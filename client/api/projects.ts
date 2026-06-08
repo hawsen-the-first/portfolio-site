@@ -26,7 +26,7 @@ export async function fetchAllProjects() {
 
 export async function fetchProjectBySlug(slug: string) {
   const { data } = await strapiGet<StrapiListResponse<StrapiProject>>(
-    `/api/projects?filters[slug][$eq]=${encodeURIComponent(slug)}`
+    `/api/projects?filters[slug][$eq]=${encodeURIComponent(slug)}&populate[coverImage]=*&populate[Images]=*&populate[clients]=*`
   )
   return data[0] ?? null
 }

@@ -1,10 +1,16 @@
-import { useState, FormEvent } from 'react'
-import { submitContactForm } from '../../api/contact'
+import { useState, useEffect, FormEvent } from 'react'
+import { fetchContact, submitContactForm } from '../../api/contact'
+import type { StrapiContact } from '../../types/strapi'
 import styles from './Contact.module.css'
 
 export function Contact() {
+  const [info, setInfo] = useState<StrapiContact | null>(null)
   const [form, setForm] = useState({ email: '', mobile: '', message: '' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+
+  useEffect(() => {
+    fetchContact().then(setInfo).catch(console.error)
+  }, [])
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,11 +34,8 @@ export function Contact() {
     <section id="contact" className={styles.section}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h2 className={styles.title}>Get In Touch</h2>
-          <p className={styles.subtitle}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempus incididunt ut labore et dolore magna aliqua.
-          </p>
+          <h2 className={styles.title}>{info?.Title ?? 'Get In Touch'}</h2>
+          {info?.Blurb && <p className={styles.subtitle}>{info.Blurb}</p>}
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit} noValidate>

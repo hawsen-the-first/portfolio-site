@@ -6,6 +6,16 @@ import type { StrapiProject } from '../../types/strapi'
 import { buildRichText } from '../../utils/richText'
 import styles from './CaseStudyDetail.module.css'
 
+function toEmbedUrl(url: string): string {
+  // YouTube: watch?v=ID or youtu.be/ID → embed/ID
+  const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/)
+  if (yt) return `https://www.youtube.com/embed/${yt[1]}`
+  // Vimeo: vimeo.com/ID → player.vimeo.com/video/ID
+  const vm = url.match(/vimeo\.com\/(\d+)/)
+  if (vm) return `https://player.vimeo.com/video/${vm[1]}`
+  return url
+}
+
 export function CaseStudyDetail() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
@@ -108,6 +118,18 @@ export function CaseStudyDetail() {
             className={styles.body}
             dangerouslySetInnerHTML={{ __html: buildRichText(project.Description) }}
           />
+        )}
+
+        {project.videoUrl && (
+          <div className={styles.videoWrap}>
+            <iframe
+              src={toEmbedUrl(project.videoUrl)}
+              title={`${project.Title} video`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className={styles.video}
+            />
+          </div>
         )}
 
         {project.Images && project.Images.length > 0 && (
