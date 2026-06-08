@@ -1,7 +1,8 @@
 const BASE = (import.meta as { env: { VITE_STRAPI_URL?: string } }).env
   .VITE_STRAPI_URL ?? 'http://localhost:1337'
 
-export const strapiUrl = (path: string) => `${BASE}${path}`
+export const strapiUrl = (path: string) =>
+  path.startsWith('http://') || path.startsWith('https://') ? path : `${BASE}${path}`
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(strapiUrl(path), init)

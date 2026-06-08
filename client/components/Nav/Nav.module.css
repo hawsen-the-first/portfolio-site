@@ -50,3 +50,87 @@
 .socialLink:hover {
   color: var(--text-white);
 }
+
+/* Hamburger button — hidden on desktop */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.burger span {
+  display: block;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 2px;
+  transform-origin: center;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.burgerOpen span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.burgerOpen span:nth-child(2) {
+  opacity: 0;
+}
+
+.burgerOpen span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile drawer */
+.drawer {
+  display: none;
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border-dark);
+  padding: 24px 32px 32px;
+}
+
+.drawerLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 28px;
+}
+
+.drawerLinks a {
+  font-size: 16px;
+  color: var(--text-muted-dark);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-dark);
+  transition: color var(--ease);
+}
+
+.drawerLinks a:hover {
+  color: var(--text-white);
+}
+
+.drawerSocial {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .links,
+  .social {
+    display: none;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  .drawer {
+    display: block;
+  }
+}

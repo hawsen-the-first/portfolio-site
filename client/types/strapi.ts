@@ -13,6 +13,8 @@ export interface StrapiClient {
   Logo?: StrapiMedia[]
 }
 
+import type { RichTextBlock } from '../utils/richText'
+
 export interface StrapiProject {
   id: number
   documentId: string
@@ -21,7 +23,7 @@ export interface StrapiProject {
   tag?: string
   tagColor?: string
   shortDescription?: string
-  Description?: unknown
+  Description?: RichTextBlock[]
   demoUrl?: string
   repoUrl?: string
   ProjectStatus?: 'In Progress' | 'Completed'

@@ -1,14 +1,15 @@
 import { strapiUrl } from '../../api/strapi'
-import type { StrapiHomepage } from '../../types/strapi'
+import type { StrapiClient, StrapiHomepage } from '../../types/strapi'
 import styles from './Hero.module.css'
 
-const companies = ['ClickUp', 'Dropbox', 'Paychex', 'Elastic', 'Stripe']
+const FALLBACK_COMPANIES = ['ClickUp', 'Dropbox', 'Paychex', 'Elastic', 'Stripe']
 
 interface Props {
   homepage: StrapiHomepage | null
+  clients: StrapiClient[]
 }
 
-export function Hero({ homepage }: Props) {
+export function Hero({ homepage, clients }: Props) {
   const photoUrl = homepage?.heroPhoto?.url
     ? strapiUrl(homepage.heroPhoto.url)
     : null
@@ -41,11 +42,23 @@ export function Hero({ homepage }: Props) {
         <div className={styles.clientsInner}>
           <span className={styles.clientsLabel}>Worked with</span>
           <div className={styles.logos}>
-            {companies.map((c) => (
-              <span key={c} className={styles.logo}>
-                {c}
-              </span>
-            ))}
+            {clients.length > 0
+              ? clients.map((c) => {
+                  const logo = c.Logo?.[0]
+                  return logo ? (
+                    <img
+                      key={c.id}
+                      src={strapiUrl(logo.url)}
+                      alt={logo.alternativeText ?? c.Name}
+                      className={styles.logoImg}
+                    />
+                  ) : (
+                    <span key={c.id} className={styles.logo}>{c.Name}</span>
+                  )
+                })
+              : FALLBACK_COMPANIES.map((c) => (
+                  <span key={c} className={styles.logo}>{c}</span>
+                ))}
           </div>
         </div>
       </div>

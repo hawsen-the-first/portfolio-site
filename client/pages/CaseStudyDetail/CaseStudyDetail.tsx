@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { fetchProjectBySlug } from '../../api/projects'
 import { strapiUrl } from '../../api/strapi'
 import type { StrapiProject } from '../../types/strapi'
+import { buildRichText } from '../../utils/richText'
 import styles from './CaseStudyDetail.module.css'
 
 export function CaseStudyDetail() {
@@ -102,13 +103,11 @@ export function CaseStudyDetail() {
           )}
         </div>
 
-        {project.Description && (
-          <div className={styles.body}>
-            {/* TODO: render rich text blocks once a block renderer is added */}
-            <p className={styles.bodyPlaceholder}>
-              Rich text content — add a Strapi blocks renderer here.
-            </p>
-          </div>
+        {project.Description && project.Description.length > 0 && (
+          <div
+            className={styles.body}
+            dangerouslySetInnerHTML={{ __html: buildRichText(project.Description) }}
+          />
         )}
 
         {project.Images && project.Images.length > 0 && (

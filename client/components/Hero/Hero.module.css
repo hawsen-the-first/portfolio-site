@@ -101,6 +101,14 @@
   letter-spacing: -0.01em;
 }
 
+.logoImg {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.35;
+  filter: brightness(0) invert(1);
+}
+
 @media (max-width: 768px) {
   .inner {
     flex-direction: column-reverse;
