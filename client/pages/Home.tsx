@@ -16,34 +16,62 @@ export function Home() {
   const [recentWork, setRecentWork] = useState<StrapiProject[]>([])
   const [testimonials, setTestimonials] = useState<StrapiTestimonial[]>([])
   const [clients, setClients] = useState<StrapiClient[]>([])
+  const [heroLoading, setHeroLoading] = useState(true)
+  const [clientsLoading, setClientsLoading] = useState(true)
+  const [caseStudiesLoading, setCaseStudiesLoading] = useState(true)
+  const [recentWorkLoading, setRecentWorkLoading] = useState(true)
+  const [testimonialsLoading, setTestimonialsLoading] = useState(true)
 
   useEffect(() => {
-    fetchHomepage().then(setHomepage).catch(console.error)
-    fetchFeaturedProjects().then(setCaseStudies).catch(console.error)
-    fetchAllProjects().then(setRecentWork).catch(console.error)
-    fetchTestimonials().then(setTestimonials).catch(console.error)
-    fetchClients().then(setClients).catch(console.error)
+    fetchHomepage()
+      .then(setHomepage)
+      .catch(console.error)
+      .finally(() => setHeroLoading(false))
+    fetchFeaturedProjects()
+      .then(setCaseStudies)
+      .catch(console.error)
+      .finally(() => setCaseStudiesLoading(false))
+    fetchAllProjects()
+      .then(setRecentWork)
+      .catch(console.error)
+      .finally(() => setRecentWorkLoading(false))
+    fetchTestimonials()
+      .then(setTestimonials)
+      .catch(console.error)
+      .finally(() => setTestimonialsLoading(false))
+    fetchClients()
+      .then(setClients)
+      .catch(console.error)
+      .finally(() => setClientsLoading(false))
   }, [])
 
   return (
     <>
-      <Hero homepage={homepage} clients={clients} />
+      <Hero
+        homepage={homepage}
+        clients={clients}
+        loading={heroLoading}
+        clientsLoading={clientsLoading}
+      />
       <CaseStudies
         title={homepage?.caseStudiesTitle}
         subtitle={homepage?.caseStudiesSubtitle}
         projects={caseStudies}
+        loading={caseStudiesLoading || heroLoading}
       />
-      {testimonials.length > 0 && (
+      {(testimonialsLoading || testimonials.length > 0) && (
         <Testimonials
           title={homepage?.testimonialsTitle}
           subtitle={homepage?.testimonialsSubtitle}
           testimonials={testimonials}
+          loading={testimonialsLoading || heroLoading}
         />
       )}
       <RecentWork
         title={homepage?.recentWorkTitle}
         subtitle={homepage?.recentWorkSubtitle}
         projects={recentWork}
+        loading={recentWorkLoading || heroLoading}
       />
       <Contact />
     </>

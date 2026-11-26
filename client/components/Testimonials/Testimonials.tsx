@@ -5,6 +5,7 @@ interface Props {
   title?: string
   subtitle?: string
   testimonials: StrapiTestimonial[]
+  loading?: boolean
 }
 
 const FALLBACK: StrapiTestimonial[] = [
@@ -14,8 +15,34 @@ const FALLBACK: StrapiTestimonial[] = [
   { id: -4, documentId: '-4', Quote: 'Consectetur adipiscing elit, sed do eiusmod tempus incididunt ut labore et dolore magna aliqua.', client: { id: -4, documentId: '-4', Name: 'Client Name' } },
 ]
 
-export function Testimonials({ title, subtitle, testimonials }: Props) {
+export function Testimonials({ title, subtitle, testimonials, loading = false }: Props) {
   const items = testimonials.length > 0 ? testimonials : FALLBACK
+
+  if (loading) {
+    return (
+      <section id="testimonials" className={styles.section} aria-busy="true">
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <div className={`sk sk-dark ${styles.skTitle}`} />
+            <div className={`sk sk-dark ${styles.skSubtitle}`} />
+          </div>
+          <div className={styles.grid}>
+            {[0, 1, 2, 3].map((i) => (
+              <div key={i} className={styles.card}>
+                <div className={`sk sk-dark ${styles.skLine}`} />
+                <div className={`sk sk-dark ${styles.skLine}`} />
+                <div className={`sk sk-dark ${styles.skLine} ${styles.skLineShort}`} />
+                <div className={styles.author}>
+                  <div className={`sk sk-dark ${styles.skAvatar}`} />
+                  <div className={`sk sk-dark ${styles.skName}`} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="testimonials" className={styles.section}>

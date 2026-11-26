@@ -8,6 +8,7 @@ interface Props {
   title?: string
   subtitle?: string
   projects: StrapiProject[]
+  loading?: boolean
 }
 
 const FALLBACK: StrapiProject[] = [
@@ -17,12 +18,36 @@ const FALLBACK: StrapiProject[] = [
   { id: -4, documentId: '-4', Title: 'Work name here', slug: '', shortDescription: 'Tempor incididunt ut labore et dolore magna aliqua, sed do eiusmod tempus incididunt ut labore.' },
 ]
 
-export function RecentWork({ title, subtitle, projects }: Props) {
+export function RecentWork({ title, subtitle, projects, loading = false }: Props) {
   const items = projects.length > 0 ? projects : FALLBACK
   const [start, setStart] = useState(0)
   const canPrev = start > 0
   const canNext = start + 2 < items.length
   const visible = items.slice(start, start + 2)
+
+  if (loading) {
+    return (
+      <section id="recent-work" className={styles.section} aria-busy="true">
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <div className={`sk ${styles.skTitle}`} />
+            <div className={`sk ${styles.skSubtitle}`} />
+          </div>
+          <div className={styles.skGrid}>
+            {[0, 1].map((i) => (
+              <div key={i} className={styles.card}>
+                <div className={`sk ${styles.cardImage} ${styles.skImage}`} />
+                <div className={`sk ${styles.skCardTitle}`} />
+                <div className={`sk ${styles.skLine}`} />
+                <div className={`sk ${styles.skLine} ${styles.skLineShort}`} />
+                <div className={`sk ${styles.skCta}`} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="recent-work" className={styles.section}>

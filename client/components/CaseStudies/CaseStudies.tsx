@@ -7,6 +7,7 @@ interface Props {
   title?: string
   subtitle?: string
   projects: StrapiProject[]
+  loading?: boolean
 }
 
 const FALLBACK_STUDIES = [
@@ -15,7 +16,7 @@ const FALLBACK_STUDIES = [
   { id: -3, color: '#10b981', tag: 'Finance' },
 ]
 
-export function CaseStudies({ title, subtitle, projects }: Props) {
+export function CaseStudies({ title, subtitle, projects, loading = false }: Props) {
   const items =
     projects.length > 0
       ? projects.slice(0, 3)
@@ -28,6 +29,34 @@ export function CaseStudies({ title, subtitle, projects }: Props) {
           shortDescription:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempus incididunt.',
         }))
+
+  if (loading) {
+    return (
+      <section id="case-studies" className={styles.section} aria-busy="true">
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <div className={`sk ${styles.skTitle}`} />
+            <div className={`sk ${styles.skSubtitle}`} />
+          </div>
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              className={`${styles.study} ${i % 2 !== 0 ? styles.imageFirst : ''}`}
+            >
+              <div className={styles.studyText}>
+                <div className={`sk ${styles.skTag}`} />
+                <div className={`sk ${styles.skStudyTitle}`} />
+                <div className={`sk ${styles.skLine}`} />
+                <div className={`sk ${styles.skLine}`} />
+                <div className={`sk ${styles.skCta}`} />
+              </div>
+              <div className={`sk ${styles.studyImage}`} />
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="case-studies" className={styles.section}>

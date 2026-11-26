@@ -114,3 +114,11 @@
     order: unset;
   }
 }
+
+/* Loading skeleton */
+.skTitle { height: 40px; width: 280px; max-width: 100%; margin: 0 auto 16px; }
+.skSubtitle { height: 16px; width: 480px; max-width: 100%; margin: 0 auto; }
+.skTag { height: 24px; width: 80px; border-radius: 100px; margin-bottom: 16px; }
+.skStudyTitle { height: 32px; width: 70%; margin-bottom: 20px; }
+.skLine { height: 14px; margin-bottom: 12px; }
+.skCta { height: 40px; width: 150px; margin-top: 28px; }

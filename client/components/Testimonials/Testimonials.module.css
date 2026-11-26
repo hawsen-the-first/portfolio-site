@@ -89,3 +89,11 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Loading skeleton */
+.skTitle { height: 40px; width: 260px; max-width: 100%; margin: 0 auto 16px; }
+.skSubtitle { height: 16px; width: 480px; max-width: 100%; margin: 0 auto; }
+.skLine { height: 14px; margin-bottom: 12px; }
+.skLineShort { width: 55%; margin-bottom: 28px; }
+.skAvatar { width: 40px; height: 40px; border-radius: 50%; }
+.skName { height: 14px; width: 110px; }

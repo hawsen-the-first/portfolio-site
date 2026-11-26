@@ -7,9 +7,11 @@ const FALLBACK_COMPANIES = ['ClickUp', 'Dropbox', 'Paychex', 'Elastic', 'Stripe'
 interface Props {
   homepage: StrapiHomepage | null
   clients: StrapiClient[]
+  loading?: boolean
+  clientsLoading?: boolean
 }
 
-export function Hero({ homepage, clients }: Props) {
+export function Hero({ homepage, clients, loading = false, clientsLoading = false }: Props) {
   const photoUrl = homepage?.heroPhoto?.url
     ? strapiUrl(homepage.heroPhoto.url)
     : null
@@ -17,7 +19,18 @@ export function Hero({ homepage, clients }: Props) {
   return (
     <section id="home" className={styles.hero}>
       <div className={styles.inner}>
-        <div className={styles.content}>
+        <div className={styles.content} aria-busy={loading}>
+          {loading ? (
+            <>
+              <div className={`${styles.skeleton} ${styles.skHeading}`} />
+              <div className={`${styles.skeleton} ${styles.skHeading} ${styles.skHeadingShort}`} />
+              <div className={`${styles.skeleton} ${styles.skLine}`} />
+              <div className={`${styles.skeleton} ${styles.skLine}`} />
+              <div className={`${styles.skeleton} ${styles.skLine} ${styles.skLineShort}`} />
+              <div className={`${styles.skeleton} ${styles.skCta}`} />
+            </>
+          ) : (
+            <>
           <h1 className={styles.heading}>
             {homepage?.heroName ?? 'Your Name Here'}
           </h1>
@@ -28,9 +41,11 @@ export function Hero({ homepage, clients }: Props) {
           <a href="#contact" className={styles.cta}>
             {homepage?.heroCta ?? "Let's get started"} ›
           </a>
+            </>
+          )}
         </div>
-        <div className={styles.photo}>
-          {photoUrl && (
+        <div className={`${styles.photo} ${loading ? styles.skeleton : ''}`}>
+          {!loading && photoUrl && (
             <img
               src={photoUrl}
               alt={homepage?.heroPhoto?.alternativeText ?? 'Profile photo'}
@@ -42,7 +57,15 @@ export function Hero({ homepage, clients }: Props) {
         <div className={styles.clientsInner}>
           <span className={styles.clientsLabel}>Worked with</span>
           <div className={styles.logos}>
-            {clients.length > 0
+            {clientsLoading
+              ? [88, 72, 96, 80, 90].map((w, i) => (
+                  <div
+                    key={i}
+                    className={`${styles.skeleton} ${styles.skLogo}`}
+                    style={{ width: w }}
+                  />
+                ))
+              : clients.length > 0
               ? clients.map((c) => {
                   const logo = c.Logo?.[0]
                   return logo ? (
